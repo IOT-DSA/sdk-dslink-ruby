@@ -14,9 +14,8 @@ gem 'dslink', :git => 'git://github.com/IOT-DSA/sdk-dslink-ruby.git'
 
 ### Usage
 
-    FILE: link.rb:
-
 ```
+# link.rb
 require 'dslink'
 link = DSLink::Link.instance
 link.provider.load({
