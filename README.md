@@ -32,7 +32,7 @@ end
 
 Run:
 ```bash
-ruby link.rb --broker http://localhost:8080/conn --log debug
+$ ruby link.rb --broker http://localhost:8080/conn --log debug
 ```
 
 
