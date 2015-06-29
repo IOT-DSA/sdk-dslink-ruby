@@ -1,3 +1,3 @@
-Dir[File.join(".", "**/*.rb")].each do |f|
+Dir[File.dirname(__FILE__) + '/**/*.rb'].each do |f|
   require f
 end
