@@ -13,7 +13,7 @@ module DSLink
 
         attr_accessor :broker_uri, :link_name
 
-        attr_reader :version, :ds_id, :uri, :auth_url
+        attr_reader :version, :ds_id, :uri, :auth_url, :interval
 
         @version = '1.0.1'
 
@@ -59,6 +59,8 @@ module DSLink
                       }
             response        = http.post("#{uri.path}?#{uri.query}", opts, headers)
             server_response = JSON.parse(response.body)
+
+            @interval = server_response['updateInterval'] || 100
 
 
             temp_key     = OpenSSL::BN.new(Base64.urlsafe_decode64(server_response['tempKey'] + '='), 2)

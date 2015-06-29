@@ -11,6 +11,11 @@ module DSLink
 
         @@nodes = {}
 
+        ##
+        #
+        # Retrieves DSLink::Node at +path+
+        #
+        #
         def self.get_node(path)
             @@nodes[path]
         end
@@ -30,21 +35,13 @@ module DSLink
             build path, tree
         end
 
-        def build(start_path, tree)
-            start_path = '' if start_path == '/'
-            tree.each do |key, val|
-                if val.is_a? Hash
-                    add_child "#{start_path}/#{key}", val
-                else
-                    add_property key, val
-                end
-            end
-        end
-
-        def provider
-            DSLink::Link.instance.provider
-        end
-
+        ##
+        #
+        #
+        # Adds child at +path+ loaded with +tree+ to Node's children
+        # returns DSLink::Node
+        #   node.add_child('/test/hello', { '$type' => 'string', '?value' => 'world'})
+        #
         def add_child(path, tree)
             if tree['$is']
                 child = provider.profile(tree['$is']).new path, tree
@@ -56,26 +53,15 @@ module DSLink
             child
         end
 
-
+        ##
+        #
+        #
+        # Removes +child+ from Node's children
+        #
+        #
         def remove_child(child)
         end
 
-
-
-        def add_property(key, val)
-            if key == '$type'
-                @config['$type'] = val
-            elsif key == '$name'
-                @config['$name'] = val
-                @name = val
-            elsif key[0] == '$'
-                @config[key] = val
-            elsif key[0] == '@'
-                @attributes[key] = val
-            elsif key == '?value'
-                self.value = val
-            end
-        end
 
         def name
             @config['$name']
@@ -99,6 +85,7 @@ module DSLink
             fire_event 'update', val
         end
 
+
         def has_value?
             @value.is_a? DSLink::Value
         end
@@ -107,10 +94,22 @@ module DSLink
             @value.value || nil
         end
 
+        ##
+        #
+        #
+        # Time the value was last updated
+        #
+        #
         def value_updated_at
             @value.updated_at
         end
 
+        ##
+        #
+        #
+        # returns hash suitable to use for list request
+        #
+        #
         def to_stream
             out = @config.merge(@attributes).to_a
             @children.each do |child|
@@ -118,6 +117,38 @@ module DSLink
                 out << [child.path.split('/').last, child.config.merge(child.attributes).merge(val)]
             end
             out
+        end
+
+        private
+
+        def build(start_path, tree)
+            start_path = '' if start_path == '/'
+            tree.each do |key, val|
+                if val.is_a? Hash
+                    add_child "#{start_path}/#{key}", val
+                else
+                    add_property key, val
+                end
+            end
+        end
+
+        def provider
+            DSLink::Link.instance.provider
+        end
+
+        def add_property(key, val)
+            if key == '$type'
+                @config['$type'] = val
+            elsif key == '$name'
+                @config['$name'] = val
+                @name = val
+            elsif key[0] == '$'
+                @config[key] = val
+            elsif key[0] == '@'
+                @attributes[key] = val
+            elsif key == '?value'
+                self.value = val
+            end
         end
 
     end

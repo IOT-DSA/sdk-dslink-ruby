@@ -6,7 +6,8 @@ module DSLink
 
         attr_accessor :data_handler
 
-        def initialize(ws_uri)
+        def initialize(ws_uri, opts)
+            @interval = 1 / 1000.to_f * (opts[:interval] || 100)
             @ws_uri = ws_uri
             @data_handler = DSLink::DataHandler.new
         end
@@ -29,8 +30,10 @@ module DSLink
             @conn.onclose do |code, reason|
                 DSLinkLogger.debug "Disconnected with status code: #{code}"
             end
+            print 'Interval: '
+            puts @interval
 
-            EM.add_periodic_timer(0.1) do
+            EM.add_periodic_timer(@interval) do
                 @data_handler.send_responses
             end
         end

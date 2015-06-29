@@ -48,7 +48,7 @@ module DSLink
         def connect(&block)
             @handshake = DSLink::Handshake.new broker_uri: @broker_uri, link_name: @link_name, is_responder: true, is_requester: false
             EM.run do
-                start_link @handshake.auth_url
+                start_link @handshake.auth_url, { interval: @handshake.interval }
                 block.call
             end
         end
