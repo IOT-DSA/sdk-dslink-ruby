@@ -1,6 +1,6 @@
 $:.unshift File.expand_path("../lib", __FILE__)
 
-require 'dslink/version'
+require 'ds/version'
 
 Gem::Specification.new do |s|
   s.name        = 'dslink'
