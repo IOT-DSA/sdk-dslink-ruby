@@ -1,6 +1,5 @@
-$:.push File.expand_path("../lib", __FILE__)
+$:.unshift File.expand_path("../lib", __FILE__)
 
-require 'bundler'
 require 'dslink/version'
 
 Gem::Specification.new do |s|
