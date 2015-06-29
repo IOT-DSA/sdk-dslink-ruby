@@ -15,7 +15,10 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.required_ruby_version = '>= 2.0.0'
+  s.add_runtime_dependency 'websocket-eventmachine-client', ['= 1.1.0']
+  s.add_runtime_dependency 'slop', ['= 4.2.0']
+  s.add_runtime_dependency 'eventmachine', ['= 1.0.7']
 
-  # s.add_development_dependency 'rake'
+  # s.add_runtime_dependency ''
   # s.add_development_dependency 'minitest', '~> 5.0.0'
 end
