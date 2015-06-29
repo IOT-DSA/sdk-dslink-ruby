@@ -8,13 +8,13 @@ DSLink SDK for Ruby
 
 Add the following to your Gemfile:
 
-```bash
+```ruby
 gem 'dslink', :git => 'git://github.com/IOT-DSA/sdk-dslink-ruby.git'
 ```
 
 ### Usage
 
-```
+```ruby
 # link.rb
 require 'dslink'
 link = DSLink::Link.instance
@@ -31,7 +31,7 @@ end
 ```
 
 Run:
-```
+```bash
 ruby link.rb --broker http://localhost:8080/conn --log debug
 ```
 
