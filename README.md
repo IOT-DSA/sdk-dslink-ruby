@@ -12,6 +12,23 @@ Add the following to your Gemfile:
 gem 'dslink', :git => 'git://github.com/IOT-DSA/sdk-dslink-ruby.git'
 ```
 
+### Usage
+
+```
+require 'dslink'
+link = DSLink::Link.instance
+link.provider.load({
+    'hello-world' => {
+        '$name' => 'Hello',
+        '$type' => 'string',
+        '?value' => 'World'
+    }
+})
+link.connect do |success|
+  link.provider.get_node('/hello-world').value = 'Ruby'
+end
+```
+
 
 ### Prerequisites
 
