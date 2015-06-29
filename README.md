@@ -14,6 +14,8 @@ gem 'dslink', :git => 'git://github.com/IOT-DSA/sdk-dslink-ruby.git'
 
 ### Usage
 
+    FILE: link.rb:
+
 ```
 require 'dslink'
 link = DSLink::Link.instance
@@ -28,6 +30,14 @@ link.connect do |success|
   link.provider.get_node('/hello-world').value = 'World'
 end
 ```
+
+Run:
+```
+ruby link.rb --broker http://localhost:8080/conn --log debug
+```
+
+
+
 
 
 ### Prerequisites
