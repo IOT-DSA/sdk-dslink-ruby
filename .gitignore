@@ -3,3 +3,4 @@ Gemfile.lock
 .nodes.json
 sdk-dslink-ruby.sublime-*
 *.gem
+.yardoc
