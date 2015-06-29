@@ -2,7 +2,16 @@
 
 DSLink SDK for Ruby
 
-# WORK IN PROGRESS
+## Getting Started
+
+### Install
+
+Add the following to your Gemfile:
+
+```bash
+gem 'dslink', :git => 'git://github.com/IOT-DSA/sdk-dslink-ruby.git'
+```
+
 
 ### Prerequisites
 
