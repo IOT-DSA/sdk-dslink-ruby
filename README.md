@@ -21,11 +21,11 @@ link.provider.load({
     'hello-world' => {
         '$name' => 'Hello',
         '$type' => 'string',
-        '?value' => 'World'
+        '?value' => ''
     }
 })
 link.connect do |success|
-  link.provider.get_node('/hello-world').value = 'Ruby'
+  link.provider.get_node('/hello-world').value = 'World'
 end
 ```
 
