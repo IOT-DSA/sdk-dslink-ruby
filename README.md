@@ -4,6 +4,11 @@ DSLink SDK for Ruby
 
 ## Getting Started
 
+### Prerequisites
+
+- [Git](https://git-scm.com/downloads)
+- [Ruby](https://www.ruby-lang.org/en/downloads/)
+
 ### Install
 
 Add the following to your Gemfile:
@@ -32,17 +37,9 @@ end
 
 Run:
 ```bash
-$ ruby link.rb --broker http://localhost:8080/conn --log debug
+ruby link.rb --broker http://localhost:8080/conn --log debug
 ```
 
-
-
-
-
-### Prerequisites
-
-- [Git](https://git-scm.com/downloads)
-- [Ruby](https://www.ruby-lang.org/en/downloads/)
 
 ## Links
 
