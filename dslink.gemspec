@@ -1,10 +1,11 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-require 'dslink'
+require 'bundler'
+require 'dslink/version'
 
 Gem::Specification.new do |s|
   s.name        = 'dslink'
-  s.version     = DSLink::VERSION
+  s.version     =  DSLink::VERSION
   s.summary     = 'Ruby SDK for DSLinks'
   s.description = 'SDK to work with DSA Node Protocol'
   s.author      = 'Kerry Gould'
