@@ -20,7 +20,7 @@ module DSLink
             @conn.shutdown if @conn.respond_to? :shutdown
             @conn.terminate if @conn.respond_to? :terminate
             if @handshake.do_handshake
-                @interval = @handshake.interval
+                @interval = (@handshake.interval || 100).to_f / 1000.0
                 @ws_uri = @handshake.auth_url
                 @conn = DSLink::WebSocketClient.new(@ws_uri, current_actor)
                 if @conn.start

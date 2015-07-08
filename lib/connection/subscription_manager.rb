@@ -26,7 +26,7 @@ module DSLink
             sids.each do |sid|
                 u << update_json(sid)
             end
-            DSLink::RequestHandler.queue_response({ rid: 0, updates: u })
+            DSLink::Response.new({ rid: 0, updates: u })
         end
 
         def update_json(sid)

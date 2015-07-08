@@ -1,18 +1,29 @@
 module DSLink
     class DataHandler
 
+        @@response_queue = []
+
         def initialize
-            @request_handler = DSLink::RequestHandler
-            @response_handler = DSLink::ResponseHandler
         end
 
         def handle_data(data)
-            @request_handler.handle_requests(data['requests']) if data['requests']
-            @response_handler.handle_responses(data['responses']) if data['responses']
+            handle_requests(data['requests']) if data['requests']
+            handle_responses(data['responses']) if data['responses']
+        end
+
+        def handle_requests(requests)
+            requests.each do |req|
+                r = DSLink::Request.new(req)
+                queue_response(r.response) if r.has_response?
+            end
+        end
+
+        def queue_response(resp)
+            @@response_queue << resp
         end
 
         def send_responses
-            @request_handler.send_responses
+            DSLink::Response.flush
         end
 
     end
