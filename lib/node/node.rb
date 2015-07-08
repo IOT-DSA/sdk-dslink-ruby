@@ -11,11 +11,6 @@ module DSLink
 
         @@nodes = {}
 
-        ##
-        #
-        # Retrieves DSLink::Node at +path+
-        #
-        #
         def self.get_node(path)
             @@nodes[path]
         end
@@ -35,30 +30,25 @@ module DSLink
             build path, tree
         end
 
-        ##
-        #
-        #
-        # Adds child at +path+ loaded with +tree+ to Node's children
-        # returns DSLink::Node
-        #   node.add_child('/test/hello', { '$type' => 'string', '?value' => 'world'})
-        #
         def add_child(path, tree)
             if tree['$is']
                 child = provider.profile(tree['$is']).new path, tree
             else
                 child = DSLink::Node.new path, tree
             end
-            child.parent = self
+            # child.parent = self
             @children << child
             child
         end
 
-        ##
+        # Retrieves child specfied by name from Node's children
         #
-        #
-        # Removes +child+ from Node's children
-        #
-        #
+        # @param name [String]
+        # @return [Node, nil] child node or nil if child not found.
+        def get_child(name)
+            @children.detect { |c| c.name == name }
+        end
+
         def remove_child(child)
         end
 
@@ -94,22 +84,10 @@ module DSLink
             @value.value || nil
         end
 
-        ##
-        #
-        #
-        # Time the value was last updated
-        #
-        #
         def value_updated_at
             @value.updated_at
         end
 
-        ##
-        #
-        #
-        # returns hash suitable to use for list request
-        #
-        #
         def to_stream
             out = @config.merge(@attributes).to_a
             @children.each do |child|

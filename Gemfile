@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'websocket-eventmachine-client', '1.1.0'
+
 gem 'slop', '4.2.0'
-gem 'eventmachine', '1.0.7'
+gem 'celluloid', '0.16.0'
+gem 'celluloid-io', '0.16.2'
+gem 'websocket-driver', '0.5.4'
+
+gem 'yard', '0.8.7.6'
+gem 'rspec', '3.3.0'
 
 gemspec

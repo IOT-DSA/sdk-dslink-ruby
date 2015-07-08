@@ -1,49 +1,50 @@
-require 'logger'
-
+# require 'logger'
+require 'celluloid/autostart'
+# Celluloid.logger = Logger
 class DSLinkLogger
-    @@logger = Logger.new STDOUT
-    @@logger.level = Logger::DEBUG
+    include Celluloid
+    include Celluloid::Logger
 
-    @@logger.formatter = proc do |severity, datetime, progname, msg|
-      "[#{datetime}][#{severity}] #{msg}\n"
-    end
+
+    DEBUG   = 0
+    INFO    = 1
+    WARN    = 2
+    ERROR   = 3
+    FATAL   = 4
+
+
+    @@logger = self.new
+    @@logger_level = DEBUG
 
     def self.level=(level)
-        @@logger.level = {
-            'debug' => Logger::DEBUG,
-            'info' => Logger::INFO,
-            'warn' => Logger::WARN,
-            'error' => Logger::ERROR,
-            'fatal' => Logger::FATAL,
+        @@logger_level = {
+            'debug' => DEBUG,
+            'info' => INFO,
+            'warn' => WARN,
+            'error' => ERROR,
+            'fatal' => FATAL,
         }[level.downcase]
     end
 
-    def self.log(msg)
-        @@logger.log(msg)
-    end
 
     def self.info(msg)
-        @@logger.info(msg)
+        Celluloid.logger.info(msg) if @@logger_level <= INFO
     end
 
     def self.warn(msg)
-        @@logger.warn(msg)
+        Celluloid.logger.warn(msg) if @@logger_level <= WARN
     end
 
     def self.debug(msg)
-        @@logger.debug(msg)
+        Celluloid.logger.debug(msg) if @@logger_level <= DEBUG
     end
 
     def self.fatal(msg)
-        @@logger.fatal(msg)
+        Celluloid.logger.fatal(msg) if @@logger_level <= FATAL
     end
 
     def self.error(msg)
-        @@logger.error(msg)
-    end
-
-    def self.unkown(msg)
-        @@logger.unkown(msg)
+        Celluloid.logger.error(msg) if @@logger_level <= ERROR
     end
 
 

@@ -4,3 +4,6 @@ Gemfile.lock
 sdk-dslink-ruby.sublime-*
 *.gem
 .yardoc
+.rspec
+doc
+.dslink.key

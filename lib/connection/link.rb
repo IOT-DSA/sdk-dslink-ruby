@@ -1,3 +1,4 @@
+
 require 'slop'
 require 'singleton'
 
@@ -45,16 +46,9 @@ module DSLink
 
         end
 
-        def connect(&block)
+        def connect
             @handshake = DSLink::Handshake.new broker_uri: @broker_uri, link_name: @link_name, is_responder: true, is_requester: false
-            EM.run do
-                start_link @handshake.auth_url, { interval: @handshake.interval }
-                block.call
-            end
-        end
-
-        def start_link(ws_uri)
-            @conn = DSLink::WebSocketConnection.new(ws_uri)
+            @conn = DSLink::WebSocketConnection.new(@handshake)
             @conn.connect
         end
 

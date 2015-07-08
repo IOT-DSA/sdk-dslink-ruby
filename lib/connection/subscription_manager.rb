@@ -15,8 +15,10 @@ module DSLink
         end
 
         def unsubscribe(sid)
-            DSLink::Link.instance.provider.get_node(@subscriptions[sid]).off('update')
-            @subscriptions.delete sid
+            if @subscriptions[sid]
+                DSLink::Link.instance.provider.get_node(@subscriptions[sid]).off('update')
+                @subscriptions.delete sid
+            end
         end
 
         def send_updates(sids)
