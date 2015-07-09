@@ -59,8 +59,11 @@ module DSLink
     end
 
     def shutdown
-      @client.close if @client.respond_to? :close
-      @socket.close if @socket.respond_to? :close
+      begin
+        @client.close if @client.respond_to? :close
+        @socket.close if @socket.respond_to? :close
+      rescue
+      end
     end
   end
 end

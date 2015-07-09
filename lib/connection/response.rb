@@ -22,7 +22,7 @@ module DSLink
 
         def self.flush
             if @@queue.length > 0
-                DSLink::Link.instance.conn.send_data({ responses: @@queue.map { |r| r.to_stream } })
+                DSLink::Link.instance.conn.send_data({ responses: @@queue.uniq.map { |r| r.to_stream } })
                 @@queue = []
             end
         end

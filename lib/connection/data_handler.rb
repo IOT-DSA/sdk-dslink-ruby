@@ -1,8 +1,6 @@
 module DSLink
     class DataHandler
 
-        @@response_queue = []
-
         def initialize
         end
 
@@ -13,13 +11,8 @@ module DSLink
 
         def handle_requests(requests)
             requests.each do |req|
-                r = DSLink::Request.new(req)
-                queue_response(r.response) if r.has_response?
+                DSLink::Request.new(req)
             end
-        end
-
-        def queue_response(resp)
-            @@response_queue << resp
         end
 
         def send_responses

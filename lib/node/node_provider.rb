@@ -10,7 +10,13 @@ module DSLink
             @nodes = {}
         end
 
-        def load(tree)
+        def load(tree = nil)
+            # puts Dir.pwd
+            begin
+                tree = JSON.parse(File.read("#{Dir.pwd}/.nodes.json")) if tree.nil?
+            rescue
+                tree = {}
+            end
             @root_node = DSLink::Node.new '/', tree
         end
 
@@ -48,6 +54,10 @@ module DSLink
 
         def provider
             DSLink::Link.instance.provider
+        end
+
+        def save(file_path = '.nodes.json')
+            File.write(file_path, @root_node.to_save_stream.to_json)
         end
 
     end

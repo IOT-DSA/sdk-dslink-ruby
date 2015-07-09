@@ -31,7 +31,7 @@ module DSLink
         end
 
         def add_child(path, tree)
-            if tree['$is']
+            if tree['$is'] && tree['$is'] != 'node'
                 child = provider.profile(tree['$is']).new path, tree
             else
                 child = DSLink::Node.new path, tree
@@ -97,12 +97,24 @@ module DSLink
             out
         end
 
+        def to_save_stream
+            out = @config.merge(@attributes)
+            if has_value?
+                out['?value'] = value
+                out['ts'] = value_updated_at.iso8601
+            end
+            @children.each do |child|
+                out[child.path.split('/').last] = child.to_save_stream
+            end
+            out
+        end
+
         private
 
         def build(start_path, tree)
             start_path = '' if start_path == '/'
             tree.each do |key, val|
-                if val.is_a? Hash
+                if !['$', '@'].include?(key[0]) && val.is_a?(Hash)
                     add_child "#{start_path}/#{key}", val
                 else
                     add_property key, val

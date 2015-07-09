@@ -51,8 +51,7 @@ module DSLink
             paths.each do |sub|
                 DSLink::Link.instance.subscriptions.subscribe(sub['path'], sub['sid'])
             end
-            @response = DSLink::Response.new({ rid: @rid, stream: 'closed' })
-            DSLink::Response.flush
+            DSLink::Response.new({ rid: @rid, stream: 'closed' })
             DSLink::Link.instance.subscriptions.send_updates(paths.map { |s| s['sid'] })
         end
 
@@ -61,14 +60,13 @@ module DSLink
             sids.each do |sid|
                 DSLink::Link.instance.subscriptions.unsubscribe(sid)
             end
-            @response = DSLink::Response.new({ rid: @rid, stream: 'closed' })
-            DSLink::Response.flush
+            DSLink::Response.new({ rid: @rid, stream: 'closed' })
         end
 
 
         def do_list
             path = @request['path']
-            @response = DSLink::Response.new({ rid: @rid, stream: "open", updates: DSLink::Link.instance.provider.get_node(path).to_stream })
+            DSLink::Response.new({ rid: @rid, stream: "open", updates: DSLink::Link.instance.provider.get_node(path).to_stream })
         end
     end
 end
