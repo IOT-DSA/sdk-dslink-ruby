@@ -63,6 +63,7 @@ module DSLink
         @client.close if @client.respond_to? :close
         @socket.close if @socket.respond_to? :close
       rescue
+        DSLinkLogger.error 'Connection already closed'
       end
     end
   end

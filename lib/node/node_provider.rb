@@ -11,7 +11,6 @@ module DSLink
         end
 
         def load(tree = nil)
-            # puts Dir.pwd
             begin
                 tree = JSON.parse(File.read("#{Dir.pwd}/.nodes.json")) if tree.nil?
             rescue
