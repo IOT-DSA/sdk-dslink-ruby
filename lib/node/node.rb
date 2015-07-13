@@ -4,12 +4,21 @@ require File.join(File.dirname(__FILE__), '..', 'util', 'evented')
 module DSLink
     class Node
         include DSLink::Evented
+        include Celluloid
 
         attr_accessor :config, :attributes, :parent
 
         attr_reader :children, :name, :value, :path, :value_updated_at
 
+
         @@nodes = {}
+        @@permission_map = {
+            'none' => 0,
+            'read' => 1,
+            'write' => 2,
+            'config' => 3,
+            'never' => 4
+        }
 
         def self.get_node(path)
             @@nodes[path]
@@ -72,10 +81,18 @@ module DSLink
             rescue
                 DSLinkLogger.error "#{val} is not of type '#{@value.type}' for node: '#{@path}'"
             end
-            fire_event 'update', val
+            fire_event('update', val)
         end
 
-
+        def has_permission?(perm)
+            node_perm = @@permission_map[@config['perm']] || 1
+            perm = @@permission_map[perm] || 1
+            if perm >= node_perm
+                true
+            else
+                false
+            end
+        end
         def has_value?
             @value.is_a? DSLink::Value
         end

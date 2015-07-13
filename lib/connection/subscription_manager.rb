@@ -8,7 +8,7 @@ module DSLink
         end
 
         def subscribe(path, sid)
-            DSLink::Link.instance.provider.get_node(path).on('update') do |val|
+            DSLink::Link.instance.provider.get_node(path).on('update', '__subscription__') do |val|
                 send_update sid
             end
             @subscriptions[sid] = path
@@ -16,7 +16,7 @@ module DSLink
 
         def unsubscribe(sid)
             if @subscriptions[sid]
-                DSLink::Link.instance.provider.get_node(@subscriptions[sid]).off('update')
+                DSLink::Link.instance.provider.get_node(@subscriptions[sid]).off('update', '__subscription__')
                 @subscriptions.delete sid
             end
         end

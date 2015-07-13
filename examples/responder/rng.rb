@@ -40,11 +40,14 @@ class RNGLink < DSLink::BaseLink
         @link.provider.load(@nodes)
         @link.connect
         start_timers
+        @link.provider.get_node('/settable-node').on('update', 'setable') do |val|
+            puts val
+        end
     end
 
     def start_timers
-            every(1) do
-                (0..@num).each do |i|
+        every(1) do
+            (0..@num).each do |i|
                 @link.provider.update_value("/rng-#{i}", Random::rand)
             end
         end

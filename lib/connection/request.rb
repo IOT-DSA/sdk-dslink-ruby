@@ -5,16 +5,12 @@ module DSLink
 
 
         def initialize(request)
-            @response = nil
             @request = request
             @rid = request['rid']
             @method = request['method']
             process
         end
 
-        def has_response?
-            (@response.is_a? DSLink::Response)
-        end
 
         def process
             if @method == 'list'
@@ -42,8 +38,17 @@ module DSLink
         def do_invoke
             path = @request['path']
             params = @request['params']
+            permission = @request['permission'] || 'read'
             node = DSLink::Link.instance.provider.get_node(path)
-            node.invoke(params)
+            if node.has_permission? permission
+                node.invoke(params)
+            else
+                error_hash = {
+                    type: 'permissionDenied',
+                    msg: 'Permission Denied'
+                }
+                DSLink::ErrorResponse.new({ rid: @rid, stream: 'closed', error: error_hash })
+            end
         end
 
         def do_subscribe

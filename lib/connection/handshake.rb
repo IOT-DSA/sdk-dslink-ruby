@@ -15,7 +15,7 @@ module DSLink
 
         attr_reader :version, :ds_id, :uri, :auth_url, :interval
 
-        @version = '1.0.1'
+        @@version = '1.0.1'
 
         def initialize(opts)
             @broker_uri = opts[:broker_uri]     || 'http://localhost:8080/conn'
@@ -59,7 +59,7 @@ module DSLink
             @uri    = URI.parse("#{@broker_uri}?dsId=#{ds_id}")
 
             http    = Net::HTTP.new(uri.host, uri.port)
-            opts    = { publicKey: encoded_binary_pub_key, isRequester: requester?, isResponder: responder?, version: version }.to_json
+            opts    = { publicKey: encoded_binary_pub_key, isRequester: requester?, isResponder: responder?, version: @@version }.to_json
             headers = {
                         'Content-Type'      => "application/json",
                         'Accept-Encoding'   => "gzip,deflate",
