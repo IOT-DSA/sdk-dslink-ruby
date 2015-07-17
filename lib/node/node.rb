@@ -29,19 +29,19 @@ module DSLink
             @name = path.split('/').last
             @parent = nil
             @children = []
-            if tree['$type']
+            if tree && tree['$type']
                 @value = DSLink::Value.new tree['$type']
             end
             @config = { '$is' => 'node' }
             @attributes = {}
             @@nodes[path] = self
             @path = path
-            build path, tree
+            build(path, tree) unless tree.nil?
             create(path, tree) if respond_to? :create
         end
 
-        def add_child(path, tree)
-            if tree['$is'] && tree['$is'] != 'node'
+        def add_child(path, tree = nil)
+            if tree && tree['$is'] && tree['$is'] != 'node'
                 child = provider.profile(tree['$is']).new path, tree
             else
                 child = DSLink::Node.new path, tree

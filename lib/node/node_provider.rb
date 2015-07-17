@@ -24,7 +24,7 @@ module DSLink
             DSLink::Node.get_node(path)
         end
 
-        def add_node(path, tree)
+        def create_node(path, tree = nil)
             p = DSLink::Path.new path
             get_node(p.parent.path).add_child path, tree
         end
