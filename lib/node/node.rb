@@ -37,6 +37,7 @@ module DSLink
             @@nodes[path] = self
             @path = path
             build path, tree
+            create(path, tree) if respond_to? :create
         end
 
         def add_child(path, tree)
@@ -85,20 +86,21 @@ module DSLink
         end
 
         def has_permission?(perm)
-            node_perm = @@permission_map[@config['perm']] || 1
-            perm = @@permission_map[perm] || 1
-            if perm >= node_perm
-                true
-            else
-                false
-            end
+            # node_perm = @@permission_map[@config['perm']] || 1
+            # perm = @@permission_map[perm] || 1
+            # if perm >= node_perm
+            #     true
+            # else
+            #     false
+            # end
+            true
         end
         def has_value?
             @value.is_a? DSLink::Value
         end
 
         def value
-            @value.value || nil
+            @value.value
         end
 
         def value_updated_at

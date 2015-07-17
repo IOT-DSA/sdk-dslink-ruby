@@ -1,6 +1,4 @@
-# require 'logger'
 require 'celluloid/autostart'
-# Celluloid.logger = Logger
 class DSLinkLogger
     include Celluloid
     include Celluloid::Logger
@@ -12,8 +10,6 @@ class DSLinkLogger
     ERROR   = 3
     FATAL   = 4
 
-
-    @@logger = self.new
     @@logger_level = DEBUG
 
     def self.level=(level)
